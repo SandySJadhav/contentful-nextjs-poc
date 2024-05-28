@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,7 +15,7 @@ const NavigationWithDropdown = ({
         className="select-none p-4 cursor-pointer"
       >
         <div className="flex items-center justify-start h-full">
-          <Image src={icon} height={20} width={20} alt={label} objectFit priority fetchPriority="low" />
+          <Image src={icon} height={20} width={20} alt={label} priority fetchPriority="low" />
           {label && <span
             className={classNames('min-w-10 text-center text-base', {
               'ml-2': icon,
@@ -31,7 +30,6 @@ const NavigationWithDropdown = ({
 };
 
 const Header = ({ headerData }) => {
-  const { i18n } = useTranslation();
   const menu = [];
   const { items, languages, logo } = headerData?.fields || {};
   const { fields: { options } } = languages || { fields: {} }
@@ -47,7 +45,7 @@ const Header = ({ headerData }) => {
 
   const handleLanguageSelection = (event) => {
     console.log('🚀 event', event.target.value);
-    i18n.changeLanguage(event.target.value);
+    // i18n.changeLanguage(event.target.value);
   }
 
   return <header className='header px-12'>
