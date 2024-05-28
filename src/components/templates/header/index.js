@@ -1,14 +1,12 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 const NavigationWithDropdown = ({
   label = "",
   url,
   icon,
 }) => {
-  const pathname = usePathname();
   return (
     <Link href={url}>
       <div
@@ -17,7 +15,7 @@ const NavigationWithDropdown = ({
         className="select-none p-4 cursor-pointer"
       >
         <div className="flex items-center justify-start h-full">
-          <Image src={icon} height={40} width={40} alt={label} />
+          <Image src={icon} height={20} width={20} alt={label} objectFit priority fetchPriority="low" />
           {label && <span
             className={classNames('min-w-10 text-center text-base', {
               'ml-2': icon,
@@ -33,8 +31,10 @@ const NavigationWithDropdown = ({
 
 const Header = ({ headerData }) => {
   const menu = [];
+  const { items, languages, logo } = headerData?.fields || {};
+  const { fields: { options } } = languages || { fields: {} }
 
-  headerData?.fields?.items?.forEach(navItem => {
+  items?.forEach(navItem => {
     const { fields: { label, url, icon } } = navItem || {};
     menu.push({
       label,
@@ -42,6 +42,10 @@ const Header = ({ headerData }) => {
       icon: icon?.fields?.file?.url ? "https:" + icon?.fields?.file?.url : ""
     })
   });
+
+  const handleLanguageSelection = () => {
+
+  }
 
   return <header className='header px-12'>
     <div className="h-[70px]">
@@ -61,6 +65,14 @@ const Header = ({ headerData }) => {
           {menu.map((menu) => (
             <NavigationWithDropdown key={menu.label} {...menu} />
           ))}
+
+          {
+            options?.length > 0 && <select onSelect={handleLanguageSelection}>
+              {
+                options.map((option) => <option key={option} value={option}>{option}</option>)
+              }
+            </select>
+          }
         </div>
       </div>
     </div>
