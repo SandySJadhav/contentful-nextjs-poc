@@ -1,4 +1,5 @@
 import getContentfulClient from "@/services/contentful/client";
+import { getServerSideTranslations } from "@/services/i18next/get-serverside-translations";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,21 +14,17 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps({
-  preview,
-  locale,
-  locales,
-  defaultLocale
-}) {
-  const lang = locales?.includes(locale) ? locale : defaultLocale;
+export const getStaticProps = async ({ locale, draftMode: preview }) => {
   const headerData = await getContentfulClient({ preview }).getEntry({
     content_type: 'header',
-    locale: lang
+    locale
   });
   return {
+    revalidate: 999999,
     props: {
       headerData,
-      previewActive: preview ?? false
+      previewActive: !!preview,
+      ...(await getServerSideTranslations(locale))
     }
   };
 }
