@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const { i18n } = require('./next-i18next.config.js');
-
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -34,7 +32,11 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
-  i18n,
+  i18n: {
+    locales: ['en-US', 'de-DE'],
+    defaultLocale: 'en-US',
+    localeDetection: false
+  },
   env: {
     ENVIRONMENT_NAME: process.env.ENVIRONMENT_NAME,
   },
@@ -54,4 +56,4 @@ const nextConfig = {
   }
 };
 
-module.exports = nextConfig;
+export default nextConfig;
