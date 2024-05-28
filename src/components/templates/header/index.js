@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,7 +17,7 @@ const NavigationWithDropdown = ({
         className="select-none p-4 cursor-pointer"
       >
         <div className="flex items-center justify-start h-full">
-          {icon}
+          <Image src={icon} height={40} width={40} alt={label} />
           {label && <span
             className={classNames('min-w-10 text-center text-base', {
               'ml-2': icon,
@@ -31,14 +32,16 @@ const NavigationWithDropdown = ({
 };
 
 const Header = ({ headerData }) => {
-  console.log('🚀 HeaderData', headerData);
-  const NavigationMenus = [
-    {
-      label: "Test",
-      url: "/",
-      icon: ""
-    }
-  ]
+  const menu = [];
+
+  headerData?.fields?.items?.forEach(navItem => {
+    const { fields: { label, url, icon } } = navItem || {};
+    menu.push({
+      label,
+      url,
+      icon: icon?.fields?.file?.url ? "https:" + icon?.fields?.file?.url : ""
+    })
+  });
 
   return <header className='header px-12'>
     <div className="h-[70px]">
@@ -55,7 +58,7 @@ const Header = ({ headerData }) => {
           </div>
         </Link>
         <div className="flex items-center justify-between p-0">
-          {NavigationMenus.map((menu) => (
+          {menu.map((menu) => (
             <NavigationWithDropdown key={menu.label} {...menu} />
           ))}
         </div>
