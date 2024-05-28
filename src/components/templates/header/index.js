@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,6 +31,7 @@ const NavigationWithDropdown = ({
 };
 
 const Header = ({ headerData }) => {
+  const { i18n } = useTranslation();
   const menu = [];
   const { items, languages, logo } = headerData?.fields || {};
   const { fields: { options } } = languages || { fields: {} }
@@ -43,23 +45,26 @@ const Header = ({ headerData }) => {
     })
   });
 
-  const handleLanguageSelection = () => {
-
+  const handleLanguageSelection = (event) => {
+    console.log('🚀 event', event.target.value);
+    i18n.changeLanguage(event.target.value);
   }
 
   return <header className='header px-12'>
     <div className="h-[70px]">
       <div className="flex items-center justify-between h-full">
         <Link href="/">
-          <div className="flex items-center">
-            {/* <Image
-              alt="Logo"
-              width={100}
-              height={40}
-              src={'/logo.svg'}
-              priority
-            /> */}
-          </div>
+          {logo?.fields?.image?.fields?.file?.url &&
+            <div className="flex items-center">
+              <Image
+                alt="Logo"
+                width={40}
+                height={40}
+                src={"https:" + logo?.fields?.image?.fields?.file?.url}
+                priority
+              />
+            </div>
+          }
         </Link>
         <div className="flex items-center justify-between p-0">
           {menu.map((menu) => (
@@ -67,7 +72,7 @@ const Header = ({ headerData }) => {
           ))}
 
           {
-            options?.length > 0 && <select onSelect={handleLanguageSelection}>
+            options?.length > 0 && <select onChange={handleLanguageSelection}>
               {
                 options.map((option) => <option key={option} value={option}>{option}</option>)
               }
