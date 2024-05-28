@@ -1,4 +1,4 @@
-import Header from '@/components/features/header';
+import Header from '@/components/templates/header';
 import { Footer } from '../footer';
 
 export const Layout = ({ headerData, children }) => {

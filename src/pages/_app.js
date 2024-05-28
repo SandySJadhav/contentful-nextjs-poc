@@ -9,22 +9,17 @@ import { Layout } from '@/components/templates/layout';
 const urbanist = Urbanist({ subsets: ['latin'], variable: '--font-urbanist' });
 
 const App = ({ Component, pageProps }) => {
-  console.log('🚀 pageProps,', pageProps);
   const { locale } = useRouter();
+  const isPreview = pageProps.previewActive ?? false;
   return (
     <ContentfulLivePreviewProvider
-      enableInspectorMode={pageProps.previewActive}
-      enableLiveUpdates={pageProps.previewActive}
+      enableInspectorMode={isPreview}
+      enableLiveUpdates={isPreview}
       locale={locale || 'en-US'}
     >
-      <>
-        <main className={`${urbanist.variable} font-sans`}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </main>
-        <div id="portal" className={`${urbanist.variable} font-sans`} />
-      </>
+      <Layout headerData={pageProps.headerData}>
+        <Component {...pageProps} />
+      </Layout>
     </ContentfulLivePreviewProvider>
   );
 };
