@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const NavigationWithDropdown = ({ label, url, icon }) => (
   <Link href={url} passHref>
@@ -12,10 +12,10 @@ const NavigationWithDropdown = ({ label, url, icon }) => (
   </Link>
 );
 
-const LanguageSelector = ({ options, handleChange }) => (
-  <select onChange={handleChange} className="ml-4">
-    {options.map((option) => (
-      <option key={option} value={option}>
+const LanguageSelector = ({ options, handleChange, selected }) => (
+  <select onChange={handleChange} className="ml-4" defaultValue={selected}>
+    {options.map(option => (
+      <option key={option} value={option} defaultChecked={selected === option}>
         {option}
       </option>
     ))}
@@ -23,7 +23,8 @@ const LanguageSelector = ({ options, handleChange }) => (
 );
 
 const Header = ({ headerData }) => {
-  const { i18n } = useTranslation();
+  const router = useRouter();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { items, languages, logo } = headerData?.fields || {};
   const options = languages?.fields?.options || [];
@@ -37,7 +38,9 @@ const Header = ({ headerData }) => {
     };
   }) || [];
 
-  const handleLanguageSelection = (event) => i18n.changeLanguage(event.target.value);
+  const handleLanguageSelection = (event) => {
+    router.push("/", router.asPath, { locale: event.target.value })
+  };
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -62,10 +65,18 @@ const Header = ({ headerData }) => {
           {menu.map((menuItem) => (
             <NavigationWithDropdown key={menuItem.label} {...menuItem} />
           ))}
-          <LanguageSelector options={options} handleChange={handleLanguageSelection} />
+          <LanguageSelector
+            options={options}
+            handleChange={handleLanguageSelection}
+            selected={router.locale}
+          />
         </div>
         <div className="flex items-center sm:hidden">
-          <LanguageSelector options={options} handleChange={handleLanguageSelection} className="mr-4" />
+          <LanguageSelector
+            options={options}
+            handleChange={handleLanguageSelection}
+            className="mr-4"
+            selected={router.locale} />
         </div>
       </div>
       {isMobileMenuOpen && (

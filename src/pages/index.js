@@ -13,20 +13,14 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps({
-  preview,
-  locale,
-  locales,
-  defaultLocale
-}) {
-  const lang = locales?.includes(locale) ? locale : defaultLocale;
-  const headerData = await getContentfulClient({ preview }).getEntry({
+export async function getStaticProps({ preview, locale }) {
+  const headerData = await getContentfulClient({ preview }).getEntries({
     content_type: 'header',
-    locale: lang
+    locale
   });
   return {
     props: {
-      headerData,
+      headerData: headerData?.items?.[0],
       previewActive: preview ?? false
     }
   };
