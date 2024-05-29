@@ -1,5 +1,4 @@
 import { ContentfulLivePreviewProvider } from '@contentful/live-preview/react';
-import { appWithTranslation } from 'next-i18next';
 import '../styles/globals.scss';
 import { useRouter } from 'next/router';
 import Layout from '@/components/layout';
@@ -34,4 +33,4 @@ const App = ({ Component, pageProps }) => {
   );
 };
 
-export default appWithTranslation(App);
+export default App;
