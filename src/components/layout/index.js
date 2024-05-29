@@ -1,6 +1,6 @@
 import Header from '@/components/header';
 
-export const Layout = ({ headerData, children }) => {
+export default function Layout({ headerData, children }) {
   return (
     <>
       <Header headerData={headerData} />

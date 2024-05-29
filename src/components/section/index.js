@@ -4,6 +4,8 @@ export default function Section({ fields, sys }) {
   const sectionType = sys?.contentType?.sys?.id;
 
   if (sectionType === 'fiftyFiftyContent') {
-    return <FiftyFiftyContent sectionData={fields} />;
+    return <FiftyFiftyContent fields={fields} />;
   }
+
+  return
 }
