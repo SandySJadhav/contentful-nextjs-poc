@@ -60,6 +60,7 @@ const Header = ({ headerData }) => {
               </div>
             </Link>
           )}
+          {logo?.fields?.title && <div className="p-4">{logo?.fields?.title}</div>}
         </div>
         <div className="hidden sm:flex items-center">
           {menu.map((menuItem) => (

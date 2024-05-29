@@ -1,16 +1,8 @@
+import Landing from "@/components/landing";
 import getContentfulClient from "@/services/contentful/client";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      Body
-    </main>
-  );
+  return (<Landing />);
 }
 
 export async function getStaticProps({ preview, locale }) {
@@ -18,8 +10,12 @@ export async function getStaticProps({ preview, locale }) {
     content_type: 'header',
     locale
   });
+
+  const pageData = {};
+
   return {
     props: {
+      pageData,
       headerData: headerData?.items?.[0],
       previewActive: preview ?? false
     }
