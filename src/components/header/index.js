@@ -39,7 +39,7 @@ const Header = ({ headerData }) => {
   }) || [];
 
   const handleLanguageSelection = (event) => {
-    router.push("/", router.asPath, { locale: event.target.value })
+    router.push(router.pathname, router.asPath, { locale: event.target.value })
   };
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
