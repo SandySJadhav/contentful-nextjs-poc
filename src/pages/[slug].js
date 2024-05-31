@@ -10,7 +10,7 @@ export async function getStaticPaths({ locales = [] }) {
     content_type: 'landingPage'
   });
   const landingPages = res?.items?.filter(({ fields }) => {
-    return fields.title !== "Home" && fields.title !== "Heim"
+    return fields.title !== "home" && fields.title !== "heim"
   });
   const paths = landingPages.map(({ fields }) => ({
     params: { slug: fields.title }
