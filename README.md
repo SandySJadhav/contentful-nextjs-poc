@@ -21,8 +21,13 @@ NODE_TLS_REJECT_UNAUTHORIZED="0"
 # Run the development server:
 
 ```bash
+npm install
+and
 npm run dev
 ```
 
 # Open below url on browser
 [http://localhost:3000](http://localhost:3000)
+
+# Output will looks like this
+![image](https://github.com/SandySJadhav/contentful-nextjs-poc/assets/25506181/c08ff765-8343-4dd7-bcba-950f4d23ef9d)
