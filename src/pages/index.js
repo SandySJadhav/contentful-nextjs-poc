@@ -20,7 +20,7 @@ export async function getStaticProps({ preview, locale }) {
   let pageData = {};
 
   landingPages.items.forEach(({ fields }) => {
-    if (fields.title === "Home" || fields.title === "Heim") {
+    if (fields.title === "home" || fields.title === "heim") {
       pageData = fields;
     }
   })

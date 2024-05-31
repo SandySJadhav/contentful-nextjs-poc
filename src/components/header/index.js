@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 
 const NavigationWithDropdown = ({ label, url, icon }) => (
@@ -24,6 +25,7 @@ const LanguageSelector = ({ options, handleChange, selected }) => (
 
 const Header = ({ headerData }) => {
   const router = useRouter();
+  const path = usePathname();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { items, languages, logo } = headerData?.fields || {};
@@ -39,7 +41,7 @@ const Header = ({ headerData }) => {
   }) || [];
 
   const handleLanguageSelection = (event) => {
-    router.push(router.pathname, router.asPath, { locale: event.target.value })
+    router.push(path, router.asPath, { locale: event.target.value })
   };
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
